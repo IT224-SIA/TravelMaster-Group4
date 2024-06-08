@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Services;
 
 use App\Traits\ConsumesExternalService;
-
+use Illuminate\Support\Facades\Log;
 class TaskManagerService
 {
     use ConsumesExternalService;
@@ -27,9 +26,11 @@ class TaskManagerService
             'Content-Type' => 'application/json',
         ];
 
-        $body = json_encode($data);
+        Log::info('Creating task with data:', $data);
+        $response = $this->performRequest('POST', $this->baseUrl, $data, $headers);
+        Log::info('Response from task creation:', $response);
 
-        return $this->performRequest('POST', 'https://task-manager-api3.p.rapidapi.com/', $body, $headers);
+    return $response;
     }
 
     public function getTaskList()

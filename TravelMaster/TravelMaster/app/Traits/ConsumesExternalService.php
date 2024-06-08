@@ -11,16 +11,20 @@ trait ConsumesExternalService
      */
     // note form params and headers are optional
 
-    public function performRequest($method, $requestUrl,$form_params =[],$headers =[])
+    public function performRequest($method, $url, $data = [], $headers = [])
     {
-        // create a new client request
-        $client = new Client(['base_url' => $this->baseUrl,]);
-        
-        // perform the request (method, url, form parameters, headers)
-        $response = $client->request($method,$requestUrl, ['form_params' => $form_params, 'headers' => $headers]);
-        
-        // return the response body contents
-        return $response->getBody()->getContents(); 
-    
+        $client = new Client();
+
+        $options = [
+            'headers' => $headers,
+        ];
+
+        if (!empty($data)) {
+            $options['json'] = $data;
+        }
+
+        $response = $client->request($method, $url, $options);
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

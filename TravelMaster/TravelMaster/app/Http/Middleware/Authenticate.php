@@ -41,4 +41,8 @@ class Authenticate
 
         return $next($request);
     }
+    protected $except = [
+        'api/taskmanager',
+        'api/taskmanager/*',
+    ];
 }
