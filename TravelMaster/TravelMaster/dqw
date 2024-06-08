@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Services;
+
+use GuzzleHttp\Client;
+
+class User1Service
+{
+    protected $client;
+
+
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    public function getCountryDetails($countryCode)
+    {
+        $response = $this->client->request('GET', 'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/' . $countryCode, [
+            'headers' => [
+                'x-rapidapi-host' => env('USERS1_SERVICE_HOST'),
+                'x-rapidapi-key' => env('USERS1_SERVICE_KEY'),
+            ],
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);    
+    }
+
+    public function getCountryRegions($countryCode)
+    {
+        $response = $this->client->request('GET', 'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/' . $countryCode . '/regions', [
+            'headers' => [
+                'x-rapidapi-host' => env('USERS1_SERVICE_HOST'),
+                'x-rapidapi-key' => env('USERS1_SERVICE_KEY'),
+            ],
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);  
+    }
+
+    public function getCountryRegionDetails($countryCode, $regionCode)
+    {
+        return $this->request('GET', "/geo/countries/{$countryCode}/regions/{$regionCode}");
+    }
+
+    public function getCityDetails($cityId)
+    {
+        return $this->request('GET', "/geo/cities/{$cityId}");
+    }
+
+    public function getCitiesNearCity($cityId, $radius)
+    {
+        return $this->request('GET', "/geo/cities/{$cityId}/nearbyCities", [
+            'query' => [
+                'radius' => $radius
+            ]
+        ]);
+    }
+
+    public function getCityDistance($fromCityId, $toCityId)
+    {
+        return $this->request('GET', "/geo/cities/{$fromCityId}/distance", [
+            'query' => [
+                'toCityId' => $toCityId
+            ]
+        ]);
+    }
+
+    public function getCityTime($cityId)
+    {
+        return $this->request('GET', "/geo/cities/{$cityId}/time");
+    }
+
+    public function getPlaceDetails($placeId)
+    {
+        return $this->request('GET', "/geo/places/{$placeId}");
+    }
+
+    public function getPlacesNearPlace($placeId)
+    {
+        return $this->request('GET', "/geo/places/{$placeId}/nearbyPlaces");
+    }
+
+    public function getPlaceDistance($placeId, $toPlaceId)
+    {
+        return $this->request('GET', "/geo/places/{$placeId}/distance", [
+            'query' => [
+                'toPlaceId' => $toPlaceId
+            ]
+        ]);
+    }
+
+    public function getPlaceDateTime($placeId)
+    {
+        return $this->request('GET', "/geo/places/{$placeId}/dateTime");
+    }
+
+    public function getPlaceTime($placeId)
+    {
+        return $this->request('GET', "/geo/places/{$placeId}/time");
+    }
+} // working nani
