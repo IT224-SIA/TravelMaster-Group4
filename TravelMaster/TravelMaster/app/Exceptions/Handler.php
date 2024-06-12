@@ -3,9 +3,11 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Queue\EntityNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -55,6 +57,14 @@ class Handler extends ExceptionHandler
             $message = $exception->getResponse()->getBody();
             $code = $exception->getCode();
             return $this->errorMessage($message,200);
-        }        
+        }
+
+        if ($exception instanceof BadRequestException) {
+            return new JsonResponse(['error' => $exception->getMessage()], 400);
+        }
+
+        if ($exception instanceof EntityNotFoundException) {
+            return new JsonResponse(['error' => $exception->getMessage()], 404);
+        }
     }
 }

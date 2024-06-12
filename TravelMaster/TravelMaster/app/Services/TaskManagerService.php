@@ -30,7 +30,7 @@ class TaskManagerService
         $response = $this->performRequest('POST', $this->baseUrl, $data, $headers);
         Log::info('Response from task creation:', $response);
 
-    return $response;
+        return $response;
     }
 
     public function getTaskList()
@@ -51,7 +51,12 @@ class TaskManagerService
             'Content-Type' => 'application/json',
         ];
 
-        return $this->performRequest('PUT', "{$this->baseUrl}/$id", $data, $headers);
+        Log::info('Updating task with new data:', $data);
+        $response = $this->performRequest('PUT', "{$this->baseUrl}/$id", $data, $headers);
+        Log::info('Response from task update:', $response);
+
+        return $response;
+        // return $this->performRequest('PUT', "{$this->baseUrl}/$id", $data, $headers);
     }
 
     public function deleteTask($id)

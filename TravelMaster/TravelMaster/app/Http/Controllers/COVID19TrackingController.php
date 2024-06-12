@@ -16,6 +16,11 @@ class COVID19TrackingController extends Controller
 
     public function getCountryData($country)
     {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $user = auth()->user();
         return response()->json($this->service->getCountryData($country));
     }
 }

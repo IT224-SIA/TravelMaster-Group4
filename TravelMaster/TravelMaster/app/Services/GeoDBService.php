@@ -31,10 +31,15 @@ class GeoDBService
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    // public function getCountryDetails($countryCode)
+    // {
+    //     return $this->request('GET', "/v1/geo/countries/{$countryCode}");
+    // }
     public function getCountryDetails($countryCode)
     {
         return $this->request('GET', "/v1/geo/countries/{$countryCode}");
     }
+
 
     public function getCountryRegions($countryCode)
     {
