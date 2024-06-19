@@ -25,17 +25,22 @@ $router->get('/', function () use ($router) {
 //     return $router->app->version();
 // });
 
-Route::group([
+// Route::group([
 
-    'prefix' => 'api'
+//     'prefix' => 'api'
 
-], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('user-profile', 'AuthController@me');
+// ], function ($router) {
+//     Route::post('login', 'AuthController@login');
+//     Route::post('logout', 'AuthController@logout');
+//     Route::post('refresh', 'AuthController@refresh');
+//     Route::post('user-profile', 'AuthController@me');
 
-});
+// });
+# User Authentication skrrt skrt
+$router->post('/api/login', 'AuthController@login');
+$router->post('/api/logout', 'AuthController@logout');
+$router->post('/api/refresh', 'AuthController@refresh');
+$router->post('/api/user-profile', 'AuthController@me');
 
 # GeoDB Cities
 $router->get('/api/geodb/countries/{countryCode}', 'GeoDBController@getCountryDetails');
