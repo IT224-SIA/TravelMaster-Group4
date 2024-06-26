@@ -17,14 +17,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// $router->get('/', function () use ($router) {
-//     echo "<center> Welcome </center>";
-// });
-
-// $router->get('/version', function () use ($router) {
-//     return $router->app->version();
-// });
-
 // Route::group([
 
 //     'prefix' => 'api'
@@ -36,35 +28,33 @@ $router->get('/', function () use ($router) {
 //     Route::post('user-profile', 'AuthController@me');
 
 // });
+
 # User Authentication skrrt skrt
-$router->post('/api/login', 'AuthController@login');
-$router->post('/api/logout', 'AuthController@logout');
-$router->post('/api/refresh', 'AuthController@refresh');
-$router->post('/api/user-profile', 'AuthController@me');
+$router->post('/api/login', 'AuthController@login'); // for login
+$router->post('/api/logout', 'AuthController@logout'); // for logout
+$router->post('/api/refresh', 'AuthController@refresh'); // for refresh and generating new token
+$router->post('/api/user-profile', 'AuthController@me'); // for getting user profile
 
 # GeoDB Cities
-$router->get('/api/geodb/countries/{countryCode}', 'GeoDBController@getCountryDetails');
-$router->get('/api/geodb/countries/{countryCode}/regions', 'GeoDBController@getCountryRegions');
-$router->get('/api/geodb/countries/{countryCode}/regions/{regionCode}', 'GeoDBController@getCountryRegionDetails');
-$router->get('/api/geodb/cities/{cityId}', 'GeoDBController@getCityDetails');
-$router->get('/api/geodb/cities/{cityId}/nearbyCities', 'GeoDBController@getCitiesNearCity');
-$router->get('/api/geodb/cities/{fromCityId}/distance/{toCityId}', 'GeoDBController@getCityDistance'); // unya nani
-$router->get('/api/geodb/cities/{cityId}/time', 'GeoDBController@getCityTime');
-$router->get('/api/geodb/places/{placeId}', 'GeoDBController@getPlaceDetails');
-$router->get('/api/geodb/places/{placeId}/nearbyPlaces', 'GeoDBController@getPlacesNearPlace');
-$router->get('/api/geodb/places/{placeId}/distance', 'GeoDBController@getPlaceDistance'); // unya nani
-$router->get('/api/geodb/places/{placeId}/dateTime', 'GeoDBController@getPlaceDateTime');
-$router->get('/api/geodb/places/{placeId}/time', 'GeoDBController@getPlaceTime');
+$router->get('/api/geodb/countries/{countryCode}', 'GeoDBController@getCountryDetails'); // for getting country details
+$router->get('/api/geodb/countries/{countryCode}/regions', 'GeoDBController@getCountryRegions'); // for getting country regions
+$router->get('/api/geodb/countries/{countryCode}/regions/{regionCode}', 'GeoDBController@getCountryRegionDetails'); // for getting region details
+$router->get('/api/geodb/cities/{cityId}', 'GeoDBController@getCityDetails'); // for getting city details
+$router->get('/api/geodb/cities/{cityId}/nearbyCities', 'GeoDBController@getCitiesNearCity'); // for getting cities near specified city
+$router->get('/api/geodb/places/{placeId}', 'GeoDBController@getPlaceDetails'); // for getting place details
+$router->get('/api/geodb/places/{placeId}/nearbyPlaces', 'GeoDBController@getPlacesNearPlace'); // for getting places near specified place
+$router->get('/api/geodb/places/{placeId}/dateTime', 'GeoDBController@getPlaceDateTime'); // for getting place date time
+$router->get('/api/geodb/places/{placeId}/time', 'GeoDBController@getPlaceTime'); // for getting place time
 
-# WeatherAPI
-$router->get('/api/weather/forecast/{city}/{days}', 'WeatherAPIController@getWeatherForecast');
-$router->get('/api/weather/timezone/{city}', 'WeatherAPIController@getTimeZone');
+# WeatherAPI 
+$router->get('/api/weather/forecast/{city}/{days}', 'WeatherAPIController@getWeatherForecast'); // for getting weather forecast of a city
+$router->get('/api/weather/timezone/{city}', 'WeatherAPIController@getTimeZone'); // for getting time zone of a city
 
 # COVID-19 Tracking API
-$router->get('/api/covid19/{country}', 'COVID19TrackingController@getCountryData');
+$router->get('/api/covid19/{country}', 'COVID19TrackingController@getCountryData'); // for getting country data
 
 # Task Manager
-$router->get('/api/taskmanager', 'TaskManagerController@seeTasks');
-$router->post('/api/taskmanager', 'TaskManagerController@postTask');
-$router->put('/api/taskmanager/{id}', 'TaskManagerController@editTask'); 
-$router->delete('/api/taskmanager/{id}', 'TaskManagerController@deleteTask'); 
+$router->get('/api/taskmanager', 'TaskManagerController@seeTasks'); // for retrieving all tasks
+$router->post('/api/taskmanager', 'TaskManagerController@postTask'); // for creating a new task
+$router->put('/api/taskmanager/{id}', 'TaskManagerController@editTask'); // for editing an existing task
+$router->delete('/api/taskmanager/{id}', 'TaskManagerController@deleteTask'); // for deleting an existing task
