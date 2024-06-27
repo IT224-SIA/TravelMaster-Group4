@@ -136,7 +136,7 @@ class GeoDBController extends Controller
                         [
                             [
                                 'code' => 'ENTITY_NOT_FOUND',
-                                'message' => 'Country and region invalid'
+                                'message' => 'Country and region invalid.'
                             ]
                         ]
                 ], 404);
@@ -166,7 +166,7 @@ class GeoDBController extends Controller
                         [
                             [
                                 'code' => 'ENTITY_NOT_FOUND',
-                                'message' => 'Country or region invalid'
+                                'message' => 'Country or region invalid.'
                             ]
                         ]
                 ], 404);
