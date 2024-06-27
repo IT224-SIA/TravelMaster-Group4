@@ -50,7 +50,15 @@ class WeatherAPIController extends Controller
 
         // Checking if the city entered by the user is not in the array of valid cities
         if (!in_array($city, $validCities)) {
-            return response()->json(['error' => 'City \'' . $city . '\' not found.'], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'City \'' . $city . '\' not found.'
+                        ]
+                    ]
+            ], 404);
         }
 
         $user = auth()->user();
@@ -76,7 +84,15 @@ class WeatherAPIController extends Controller
 
         // Checking if the city entered by the user is not in the array of valid cities, return an error if so
         if (!in_array($city, $validCities)) {
-            return response()->json(['error' => 'City \'' . $city . '\' not found.'], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'City \'' . $city . '\' not found.'
+                        ]
+                    ]
+            ], 404);
         }
 
         // Call the getTimeZone method from the WeatherAPIService and pass the arguments.

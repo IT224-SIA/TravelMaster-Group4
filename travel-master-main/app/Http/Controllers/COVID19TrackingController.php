@@ -48,7 +48,15 @@ class COVID19TrackingController extends Controller
 
         // Checking if the country entered by user is in the array of valid countries, if so, return an error in JSON
         if (!in_array($country, $validCountries)) {
-            return response()->json(['error' => 'Country \'' . $country . '\' not found.'], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Country \'' . $country . '\' not found.'
+                        ]
+                    ]
+            ], 404);
         }
 
         return response()->json($this->service->getCountryData($country)); // Calls the getCountryData method of the COVID19TrackingService and returns the data in JSON

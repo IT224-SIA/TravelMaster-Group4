@@ -62,7 +62,15 @@ class GeoDBController extends Controller
 
         // Checking if the argument passed is not the array of valid country codes, if so, return a 404 error in JSON
         if (!in_array($countryCode, $validCountryCodes)) {
-            return response()->json(['error' => 'Country not found for country id: ' . $countryCode], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Country not found for country id: ' . $countryCode
+                        ]
+                    ]
+            ], 404);
         }
 
         return response()->json($this->geoDBService->getCountryDetails($countryCode)); // If the user is authenticated and the country code is valid, return the country details in JSON
@@ -87,7 +95,15 @@ class GeoDBController extends Controller
 
         // Checking if the argument passed is not in the array of valid country codes, if so, return a 404 error in JSON
         if (!in_array($countryCode, $validCountryCodes)) {
-            return response()->json(['error' => 'Country not found for country id: ' . $countryCode], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Country not found for country id: ' . $countryCode
+                        ]
+                    ]
+            ], 404);
         }
 
         return response()->json($this->geoDBService->getCountryRegions($countryCode)); // If the user is authenticated and the country code is valid, return the region details in JSON
@@ -115,14 +131,45 @@ class GeoDBController extends Controller
         // Checking if the arguments passed are in the arrays of valid country codes and region codes, if not, return a 404 error in JSON
         if (!in_array($countryCode, $validCountryCodes) || !in_array($regionCode, $validRegionCodes)) {
             if (!in_array($countryCode, $validCountryCodes) && !in_array($regionCode, $validRegionCodes)) {
-                return response()->json(['error' => 'Country and Region invalid'], 404);
+                return response()->json([
+                    'errors' =>
+                        [
+                            [
+                                'code' => 'ENTITY_NOT_FOUND',
+                                'message' => 'Country and region invalid'
+                            ]
+                        ]
+                ], 404);
             } else if (!in_array($regionCode, $validRegionCodes)) {
-                return response()->json(['error' => 'Region not found for region id: ' . $regionCode], 404);
+                return response()->json([
+                    'errors' =>
+                        [
+                            [
+                                'code' => 'ENTITY_NOT_FOUND',
+                                'message' => 'Region  not found for region id: ' . $regionCode
+                            ]
+                        ]
+                ], 404);
             } else if (!in_array($countryCode, $validCountryCodes)) {
-                return response()->json(['error' => 'Country not found for country id: ' . $countryCode], 404);
+                return response()->json([
+                    'errors' =>
+                        [
+                            [
+                                'code' => 'ENTITY_NOT_FOUND',
+                                'message' => 'Country not found for country id: ' . $countryCode
+                            ]
+                        ]
+                ], 404);
             } else {
-                return response()->json(['error' => 'Country and Region invalid'], 404);
-
+                return response()->json([
+                    'errors' =>
+                        [
+                            [
+                                'code' => 'ENTITY_NOT_FOUND',
+                                'message' => 'Country or region invalid'
+                            ]
+                        ]
+                ], 404);
             }
         }
 
@@ -147,7 +194,15 @@ class GeoDBController extends Controller
 
         // If city ID entered by user is not in the array of valid city IDs, return a 404 error in JSON
         if (!in_array($cityId, $validCityIds)) {
-            return response()->json(['error' => 'City not found for city id: ' . $cityId], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'City  not found for city id: ' . $cityId
+                        ]
+                    ]
+            ], 404);
         }
 
         // Return the city details in JSON if user is authenticated and city ID is valid
@@ -176,7 +231,15 @@ class GeoDBController extends Controller
 
         // If city ID entered by user is not in the array of valid city IDs, return a 404 error in JSON
         if (!in_array($cityId, $validCityIds)) {
-            return response()->json(['error' => 'City not found for city id: ' . $cityId], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'City  not found for city id: ' . $cityId
+                        ]
+                    ]
+            ], 404);
         }
 
         // Return the cities near the given city in JSON if user is authenticated and city ID is valid
@@ -201,7 +264,15 @@ class GeoDBController extends Controller
 
         // If place ID entered by user is not in the array of valid place IDs, return a 404 error in JSON
         if (!in_array($placeId, $validPlaceIds)) {
-            return response()->json(['error' => 'Place not found for place id: ' . $placeId], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Place  not found for place id: ' . $placeId
+                        ]
+                    ]
+            ], 404);
         }
 
         // Return the place details in JSON if user is authenticated and place ID is valid
@@ -227,7 +298,15 @@ class GeoDBController extends Controller
 
         // If place ID entered by user is not in the array of valid place IDs, return a 404 error in JSON
         if (!in_array($placeId, $validPlaceIds)) {
-            return response()->json(['error' => 'Place not found for place id: ' . $placeId], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Place  not found for place id: ' . $placeId
+                        ]
+                    ]
+            ], 404);
         }
 
         return response()->json($this->geoDBService->getPlacesNearPlace($placeId)); // Return the places near the given place in JSON
@@ -252,7 +331,15 @@ class GeoDBController extends Controller
 
         // If place ID entered by user is not in the array of valid place IDs, return a 404 error in JSON
         if (!in_array($placeId, $validPlaceIds)) {
-            return response()->json(['error' => 'Place not found for place id: ' . $placeId], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Place  not found for place id: ' . $placeId
+                        ]
+                    ]
+            ], 404);
         }
 
         // Return the date and time of the specified place in JSON
@@ -278,7 +365,15 @@ class GeoDBController extends Controller
 
         // If place ID entered by user is not in the array of valid place IDs, return a 404 error in JSON
         if (!in_array($placeId, $validPlaceIds)) {
-            return response()->json(['error' => 'Place not found for place id: ' . $placeId], 404);
+            return response()->json([
+                'errors' =>
+                    [
+                        [
+                            'code' => 'ENTITY_NOT_FOUND',
+                            'message' => 'Place  not found for place id: ' . $placeId
+                        ]
+                    ]
+            ], 404);
         }
 
         // Return the time of the specified place in JSON
